@@ -15,6 +15,7 @@ public class example4_12 {
 		concert A[] = new concert[10];
 		concert B[] = new concert[10];
 		String na;
+		int coin;//입력받은 이름과 배열의 이름을 비교하기위해 선언
 		for(int i = 0; i < 10; i++)
 		{
 			S[i] = new concert("---");//모든 자리를 ---로 초기화 합니다.
@@ -23,6 +24,7 @@ public class example4_12 {
 		}
 		while(true)
 		{
+			coin = 0;//반복문이 반복될때마다 비교를 하기 위해 0으로 초기화 시켜줍니다.
 			System.out.print("예약 : 1, 조회 : 2, 취소 : 3, 끝내기 : 4 >>");
 			int a = scanner.nextInt();//예약 조회 취소 종료를 결정하는 정수값을 입력합니다.
 			if(a==1) {
@@ -38,7 +40,9 @@ public class example4_12 {
 					System.out.print("번호 >>");
 					int num = scanner.nextInt();//몇번째 자리에 들어갈지를 정하는 정수를 입력합니다.
 					num--;//좌석은 1부터 시작하지만 배열의 자리는 0부터 시작하기때문에 -1을 해줍니다.
-					S[num] = new concert(na);//입력받은 이름을 저장할 생성자를 불러옵니다.					
+					if(num < 10)
+						S[num] = new concert(na);//입력받은 이름을 저장할 생성자를 불러옵니다.		
+					else System.out.println("없는 번호입니다");//입력받은 번호가 10보다 클경우 오류문을 출력합니다.
 				}
 				if(b == 2) {
 					System.out.print("A>>");
@@ -50,7 +54,11 @@ public class example4_12 {
 					System.out.print("번호 >>");
 					int num = scanner.nextInt();
 					num--;
-					A[num] = new concert(na);	
+					if(num < 10)
+						A[num] = new concert(na);
+					else System.out.println("없는 번호입니다");
+					
+					
 				}
 				if(b == 3) {
 					System.out.print("B>>");
@@ -62,8 +70,13 @@ public class example4_12 {
 					System.out.print("번호 >>");
 					int num = scanner.nextInt();
 					num--;
-					B[num] = new concert(na);	
+					if(num < 10)
+						B[num] = new concert(na);	
+					else System.out.println("없는 번호입니다");
 				}
+				
+				if(b > 3)
+					System.out.println("없는 좌석입니다");
 				
 			}
 			if(a ==2) //조회를 할때는 모든 좌석을 보여줍니다.
@@ -91,9 +104,13 @@ public class example4_12 {
 					na = scanner.next();//배열 안에 들어있는 이름과 비교하기 위한 이름을 입력합니다.
 					for(int i = 0; i < 10; i++)
 					{
-						if(S[i].name.equals(na))//해당 등급의 좌석의 배열안에 있는 이름과 입력받은 이름이 같은경우 ---로 초기화합니다.
+						if(S[i].name.equals(na)) {//해당 등급의 좌석의 배열안에 있는 이름과 입력받은 이름이 같은경우 ---로 초기화합니다.
 							S[i].name = "---";
+							coin = 1;//coin이 1이면 배열 안에 동일한 이름이 있고 취소 되었다는 뜻입니다.
+						}
 					}
+					if(coin == 0)
+						System.out.println("없는 이름입니다.");//coin이 0이므로 동일한 이름이 없습니다.
 				}
 				if(b == 2) {
 					System.out.print("A>>");
@@ -103,9 +120,13 @@ public class example4_12 {
 					na = scanner.next();
 					for(int i = 0; i < 10; i++)
 					{
-						if(A[i].name.equals(na))
+						if(A[i].name.equals(na)) {
 							A[i].name = "---";
+							coin = 1;
+						}
 					}
+					if(coin == 0)
+						System.out.println("없는 이름입니다.");
 				}
 				if(b == 3) {
 					System.out.print("B>>");
@@ -115,13 +136,19 @@ public class example4_12 {
 					na = scanner.next();
 					for(int i = 0; i < 10; i++)
 					{
-						if(B[i].name.equals(na))
+						if(B[i].name.equals(na)) {
 							B[i].name = "---";
+							coin = 1;
+						}
 					}
+					if(coin == 0)
+						System.out.println("없는 이름입니다.");
 				}
 			}
 			if(a == 4) //종료합니다.
 				break;
+			if(a > 4)
+				System.out.println("없는 번호입니다");
 		}
 		scanner.close();		
 	}
